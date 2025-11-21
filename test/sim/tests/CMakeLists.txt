@@ -15,6 +15,12 @@ target_link_libraries(test_sim_memory PRIVATE
 
 target_compile_options(test_sim_memory PRIVATE -Wall -Wextra -g)
 
+# Add coverage flags if enabled
+if(ENABLE_COVERAGE)
+    target_compile_options(test_sim_memory PRIVATE --coverage)
+    target_link_options(test_sim_memory PRIVATE --coverage)
+endif()
+
 add_test(NAME test_sim_memory COMMAND test_sim_memory)
 set_tests_properties(test_sim_memory PROPERTIES
     TIMEOUT 30
@@ -33,6 +39,12 @@ target_link_libraries(test_sim_dma PRIVATE
 )
 
 target_compile_options(test_sim_dma PRIVATE -Wall -Wextra -g)
+
+# Add coverage flags if enabled
+if(ENABLE_COVERAGE)
+    target_compile_options(test_sim_dma PRIVATE --coverage)
+    target_link_options(test_sim_dma PRIVATE --coverage)
+endif()
 
 add_test(NAME test_sim_dma COMMAND test_sim_dma)
 set_tests_properties(test_sim_dma PROPERTIES
@@ -53,10 +65,41 @@ target_link_libraries(test_sim_scheduler PRIVATE
 
 target_compile_options(test_sim_scheduler PRIVATE -Wall -Wextra -g)
 
+# Add coverage flags if enabled
+if(ENABLE_COVERAGE)
+    target_compile_options(test_sim_scheduler PRIVATE --coverage)
+    target_link_options(test_sim_scheduler PRIVATE --coverage)
+endif()
+
 add_test(NAME test_sim_scheduler COMMAND test_sim_scheduler)
 set_tests_properties(test_sim_scheduler PROPERTIES
     TIMEOUT 30
     LABELS "sim;scheduler"
+)
+
+# Test timer simulator
+add_executable(test_sim_timer
+    test_sim_timer.cpp
+)
+
+target_link_libraries(test_sim_timer PRIVATE
+    GTest::gtest
+    GTest::gtest_main
+    sim_lib
+)
+
+target_compile_options(test_sim_timer PRIVATE -Wall -Wextra -g)
+
+# Add coverage flags if enabled
+if(ENABLE_COVERAGE)
+    target_compile_options(test_sim_timer PRIVATE --coverage)
+    target_link_options(test_sim_timer PRIVATE --coverage)
+endif()
+
+add_test(NAME test_sim_timer COMMAND test_sim_timer)
+set_tests_properties(test_sim_timer PROPERTIES
+    TIMEOUT 30
+    LABELS "sim;timer"
 )
 
 message(STATUS "  Sim library tests configured")

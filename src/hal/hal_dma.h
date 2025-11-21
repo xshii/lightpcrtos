@@ -57,8 +57,8 @@ int HAL_DMA_Deinit(DmaId dmaId);
  * @param channel Output channel handle
  * @return HAL_OK on success, HAL_ERROR on failure
  */
-int HAL_DMA_RequestChannel(DmaId dmaId, DmaDirection direction,
-                           uint32_t priority, DmaChannel* channel);
+int HAL_DMA_RequestChannel(DmaId dmaId, DmaDirection direction, uint32_t priority,
+                           DmaChannel* channel);
 
 /**
  * @brief Release a DMA channel
@@ -83,8 +83,7 @@ int HAL_DMA_Configure(DmaChannel channel, DmaConfig config);
  * @param size Transfer size in bytes
  * @return HAL_OK on success, HAL_ERROR on failure
  */
-int HAL_DMA_StartTransfer(DmaChannel channel, const void* srcAddr,
-                          void* dstAddr, size_t size);
+int HAL_DMA_StartTransfer(DmaChannel channel, const void* srcAddr, void* dstAddr, size_t size);
 
 /**
  * @brief Stop DMA transfer
@@ -116,8 +115,7 @@ int HAL_DMA_WaitComplete(DmaChannel channel, uint32_t timeoutMs);
  * @param userData User data passed to callback
  * @return HAL_OK on success, HAL_ERROR on failure
  */
-int HAL_DMA_RegisterCallback(DmaChannel channel, DmaCallback callback,
-                             void* userData);
+int HAL_DMA_RegisterCallback(DmaChannel channel, DmaCallback callback, void* userData);
 
 /**
  * @brief Enable DMA events

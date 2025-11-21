@@ -47,6 +47,12 @@ target_compile_definitions(business_for_test PRIVATE
     PC_PLATFORM
 )
 
+# Add coverage flags if enabled
+if(ENABLE_COVERAGE)
+    target_compile_options(business_for_test PRIVATE --coverage)
+    target_link_options(business_for_test PRIVATE --coverage)
+endif()
+
 # Build test cases
 add_subdirectory(testcases)
 

@@ -4,6 +4,7 @@
  */
 
 #include "framework_timer.h"
+
 #include <string.h>
 
 #define MAX_TIMERS 32

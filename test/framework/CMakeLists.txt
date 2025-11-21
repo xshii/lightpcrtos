@@ -28,4 +28,10 @@ set_target_properties(framework_lib PROPERTIES
     OUTPUT_NAME "framework"
 )
 
+# Add coverage flags if enabled
+if(ENABLE_COVERAGE)
+    target_compile_options(framework_lib PRIVATE --coverage)
+    target_link_options(framework_lib PRIVATE --coverage)
+endif()
+
 message(STATUS "Framework library configured")

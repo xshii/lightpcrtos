@@ -9,6 +9,7 @@ set(SIM_SOURCES
     src/sim_scheduler.c
     src/sim_dma.c
     src/sim_memory.c
+    src/sim_timer.c
 )
 
 # Create simulation library
@@ -34,6 +35,12 @@ target_compile_options(sim_lib PRIVATE
 set_target_properties(sim_lib PROPERTIES
     OUTPUT_NAME "hardware_sim"
 )
+
+# Add coverage flags if enabled
+if(ENABLE_COVERAGE)
+    target_compile_options(sim_lib PRIVATE --coverage)
+    target_link_options(sim_lib PRIVATE --coverage)
+endif()
 
 # Add sim library tests
 add_subdirectory(tests)

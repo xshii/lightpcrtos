@@ -36,7 +36,6 @@ int SIM_MEMORY_ConfigurePool(PoolName poolName, void* baseAddr, size_t size);
  * @param currentUsage Output: current memory usage
  * @return 0 on success, -1 on failure
  */
-int SIM_MEMORY_GetPoolStats(PoolName poolName, uint32_t* totalAllocs,
-                            size_t* currentUsage);
+int SIM_MEMORY_GetPoolStats(PoolName poolName, uint32_t* totalAllocs, size_t* currentUsage);
 
 #endif /* SIM_MEMORY_H */

@@ -45,8 +45,8 @@ int HAL_SCHEDULER_Init(void);
  * @param taskHandle Output task handle
  * @return HAL_OK on success, HAL_ERROR on failure
  */
-int HAL_SCHEDULER_CreateTask(TaskFunction taskFunc, void* args,
-                              TaskPriority priority, TaskHandle* taskHandle);
+int HAL_SCHEDULER_CreateTask(TaskFunction taskFunc, void* args, TaskPriority priority,
+                             TaskHandle* taskHandle);
 
 /**
  * @brief Delete a task
