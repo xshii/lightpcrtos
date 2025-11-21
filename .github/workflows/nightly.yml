@@ -1,0 +1,60 @@
+name: Nightly Tests
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # Run at 2 AM UTC every day
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  nightly-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake g++ lcov valgrind
+
+    - name: Build with Debug
+      run: |
+        cmake -S . -B build_nightly \
+          -DCMAKE_BUILD_TYPE=Debug \
+          -DBUILD_TESTS=ON \
+          -DBUILD_EMBEDDED=OFF \
+          -DENABLE_COVERAGE=ON
+        cmake --build build_nightly -j$(nproc)
+
+    - name: Run Tests with Valgrind
+      run: |
+        cd build_nightly
+        ctest -T memcheck --output-on-failure
+
+    - name: Run Long Tests
+      run: |
+        cd build_nightly
+        # Run stress tests or long-running tests here
+        for i in {1..100}; do
+          ctest --output-on-failure || exit 1
+        done
+
+    - name: Generate Coverage
+      run: |
+        cd build_nightly
+        lcov --capture --directory . --output-file coverage.info
+        lcov --remove coverage.info '/usr/*' '*/test/*' --output-file coverage.info
+        genhtml coverage.info --output-directory coverage_html
+
+    - name: Upload Coverage HTML
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-report
+        path: build_nightly/coverage_html/
+
+    - name: Notify on Failure
+      if: failure()
+      run: |
+        echo "Nightly test failed!"
+        # Add notification logic here (Slack, Email, etc.)

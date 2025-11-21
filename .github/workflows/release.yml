@@ -1,0 +1,71 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-release:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install dependencies (Ubuntu)
+      if: runner.os == 'Linux'
+      run: sudo apt-get update && sudo apt-get install -y cmake g++
+
+    - name: Install dependencies (macOS)
+      if: runner.os == 'macOS'
+      run: brew install cmake
+
+    - name: Build Release
+      run: |
+        cmake -S . -B build_release \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DBUILD_TESTS=ON \
+          -DBUILD_EMBEDDED=OFF
+        cmake --build build_release -j$(nproc 2>/dev/null || echo 4)
+
+    - name: Run Tests
+      run: |
+        cd build_release
+        ctest --output-on-failure
+
+    - name: Package Artifacts
+      run: |
+        cd build_release
+        tar -czf lightpcrtos-${{ runner.os }}-${{ github.ref_name }}.tar.gz \
+          test/sim/liblibrary_sim.a \
+          test/framework/libframework.a
+
+    - name: Upload Release Assets
+      uses: actions/upload-artifact@v3
+      with:
+        name: release-${{ runner.os }}
+        path: build_release/*.tar.gz
+
+  create-release:
+    needs: build-release
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Download Artifacts
+      uses: actions/download-artifact@v3
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          release-*/*.tar.gz
+        draft: false
+        prerelease: false
+        generate_release_notes: true
