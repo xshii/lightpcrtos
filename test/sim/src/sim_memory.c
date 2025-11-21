@@ -102,7 +102,7 @@ int SIM_MEMORY_ConfigurePool(PoolName poolName, void* baseAddr, size_t size)
 
 int SIM_MEMORY_GetPoolStats(PoolName poolName, uint32_t* totalAllocs, size_t* currentUsage)
 {
-    SimMemoryPool* pool = SimMemoryFindPool(poolName);
+    const SimMemoryPool* pool = SimMemoryFindPool(poolName);
     if (!pool)
         return -1;
 

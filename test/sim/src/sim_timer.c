@@ -257,7 +257,7 @@ int HAL_TIMER_GetCounter(TimerHandle handle, uint32_t* value)
         return HAL_ERROR;
     }
 
-    SimTimerState* timer = (SimTimerState*) handle;
+    const SimTimerState* timer = (const SimTimerState*) handle;
     if (!timer->allocated) {
         return HAL_ERROR;
     }
@@ -294,7 +294,7 @@ int HAL_TIMER_IsRunning(TimerHandle handle, bool* isRunning)
         return HAL_ERROR;
     }
 
-    SimTimerState* timer = (SimTimerState*) handle;
+    const SimTimerState* timer = (const SimTimerState*) handle;
     if (!timer->allocated) {
         return HAL_ERROR;
     }
