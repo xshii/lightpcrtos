@@ -36,6 +36,12 @@ set_target_properties(sim_lib PROPERTIES
     OUTPUT_NAME "hardware_sim"
 )
 
+# Add coverage flags if enabled
+if(ENABLE_COVERAGE)
+    target_compile_options(sim_lib PRIVATE --coverage)
+    target_link_options(sim_lib PRIVATE --coverage)
+endif()
+
 # Add sim library tests
 add_subdirectory(tests)
 
