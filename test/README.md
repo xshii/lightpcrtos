@@ -54,6 +54,7 @@ The `.vscode/launch.json` file provides several debug configurations:
 5. **Debug Sim Memory Tests** - Debug memory simulator tests
 6. **Debug Sim DMA Tests** - Debug DMA simulator tests
 7. **Debug Sim Scheduler Tests** - Debug scheduler simulator tests
+8. **Debug Sim Timer Tests** - Debug timer simulator tests
 
 ### Using Test Filters
 
@@ -79,10 +80,11 @@ Filter patterns:
 
 ## Test Coverage
 
-### Simulation Library Tests (40 tests)
+### Simulation Library Tests (53 tests)
 - **Memory Simulator** (14 tests): Pool configuration, allocation, cache operations
 - **DMA Simulator** (13 tests): Channel management, transfers, callbacks
 - **Scheduler Simulator** (13 tests): Task creation, priorities, lifecycle
+- **Timer Simulator** (13 tests): Timer creation, callbacks, one-shot/periodic modes, delays
 
 ### Business Logic Tests (22 tests)
 - **Sensor Manager** (12 tests): Initialization, reading, sampling, edge cases
