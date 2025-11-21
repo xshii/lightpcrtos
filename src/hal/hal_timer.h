@@ -15,10 +15,7 @@ typedef uint32_t TimerId;
 typedef void* TimerHandle;
 
 /* Timer mode */
-typedef enum {
-    TIMER_MODE_ONESHOT = 0,
-    TIMER_MODE_PERIODIC = 1
-} TimerMode;
+typedef enum { TIMER_MODE_ONESHOT = 0, TIMER_MODE_PERIODIC = 1 } TimerMode;
 
 /* Timer callback function */
 typedef void (*TimerCallback)(TimerHandle handle, void* userData);
@@ -26,10 +23,10 @@ typedef void (*TimerCallback)(TimerHandle handle, void* userData);
 /* Timer configuration */
 typedef struct {
     TimerMode mode;
-    uint32_t periodUs;      /* Period in microseconds */
+    uint32_t periodUs; /* Period in microseconds */
     TimerCallback callback;
     void* userData;
-    uint8_t priority;       /* Interrupt priority (0-15) */
+    uint8_t priority; /* Interrupt priority (0-15) */
 } TimerConfig;
 
 /**

@@ -10,29 +10,32 @@ extern "C" {
 #include "sim_timer.h"
 }
 
-class SimTimerTest : public ::testing::Test {
-protected:
-    void SetUp() override {
+class SimTimerTest : public ::testing::Test
+{
+   protected:
+    void SetUp() override
+    {
         SIM_TIMER_Init();
     }
 
-    void TearDown() override {
+    void TearDown() override
+    {
         SIM_TIMER_Reset();
     }
 };
 
-TEST_F(SimTimerTest, Initialize) {
+TEST_F(SimTimerTest, Initialize)
+{
     EXPECT_EQ(HAL_OK, HAL_TIMER_Init());
 }
 
-TEST_F(SimTimerTest, CreateTimer) {
-    TimerConfig config = {
-        .mode = TIMER_MODE_PERIODIC,
-        .periodUs = 1000,
-        .callback = nullptr,
-        .userData = nullptr,
-        .priority = 0
-    };
+TEST_F(SimTimerTest, CreateTimer)
+{
+    TimerConfig config = {.mode = TIMER_MODE_PERIODIC,
+                          .periodUs = 1000,
+                          .callback = nullptr,
+                          .userData = nullptr,
+                          .priority = 0};
 
     TimerHandle handle;
     int ret = HAL_TIMER_Create(0, &config, &handle);
@@ -41,14 +44,13 @@ TEST_F(SimTimerTest, CreateTimer) {
     EXPECT_NE(nullptr, handle);
 }
 
-TEST_F(SimTimerTest, StartStopTimer) {
-    TimerConfig config = {
-        .mode = TIMER_MODE_PERIODIC,
-        .periodUs = 1000,
-        .callback = nullptr,
-        .userData = nullptr,
-        .priority = 0
-    };
+TEST_F(SimTimerTest, StartStopTimer)
+{
+    TimerConfig config = {.mode = TIMER_MODE_PERIODIC,
+                          .periodUs = 1000,
+                          .callback = nullptr,
+                          .userData = nullptr,
+                          .priority = 0};
 
     TimerHandle handle;
     HAL_TIMER_Create(0, &config, &handle);
@@ -67,14 +69,13 @@ TEST_F(SimTimerTest, StartStopTimer) {
     HAL_TIMER_Destroy(handle);
 }
 
-TEST_F(SimTimerTest, TimerCounter) {
-    TimerConfig config = {
-        .mode = TIMER_MODE_PERIODIC,
-        .periodUs = 10000,
-        .callback = nullptr,
-        .userData = nullptr,
-        .priority = 0
-    };
+TEST_F(SimTimerTest, TimerCounter)
+{
+    TimerConfig config = {.mode = TIMER_MODE_PERIODIC,
+                          .periodUs = 10000,
+                          .callback = nullptr,
+                          .userData = nullptr,
+                          .priority = 0};
 
     TimerHandle handle;
     HAL_TIMER_Create(0, &config, &handle);
@@ -90,7 +91,8 @@ TEST_F(SimTimerTest, TimerCounter) {
     HAL_TIMER_Destroy(handle);
 }
 
-TEST_F(SimTimerTest, PeriodicTimerCallback) {
+TEST_F(SimTimerTest, PeriodicTimerCallback)
+{
     int callbackCount = 0;
 
     auto callback = [](TimerHandle handle, void* userData) {
@@ -98,13 +100,11 @@ TEST_F(SimTimerTest, PeriodicTimerCallback) {
         (*count)++;
     };
 
-    TimerConfig config = {
-        .mode = TIMER_MODE_PERIODIC,
-        .periodUs = 1000,  // 1ms period
-        .callback = callback,
-        .userData = &callbackCount,
-        .priority = 0
-    };
+    TimerConfig config = {.mode = TIMER_MODE_PERIODIC,
+                          .periodUs = 1000,  // 1ms period
+                          .callback = callback,
+                          .userData = &callbackCount,
+                          .priority = 0};
 
     TimerHandle handle;
     HAL_TIMER_Create(0, &config, &handle);
@@ -118,7 +118,8 @@ TEST_F(SimTimerTest, PeriodicTimerCallback) {
     HAL_TIMER_Destroy(handle);
 }
 
-TEST_F(SimTimerTest, OneShotTimer) {
+TEST_F(SimTimerTest, OneShotTimer)
+{
     int callbackCount = 0;
 
     auto callback = [](TimerHandle handle, void* userData) {
@@ -126,13 +127,11 @@ TEST_F(SimTimerTest, OneShotTimer) {
         (*count)++;
     };
 
-    TimerConfig config = {
-        .mode = TIMER_MODE_ONESHOT,
-        .periodUs = 1000,
-        .callback = callback,
-        .userData = &callbackCount,
-        .priority = 0
-    };
+    TimerConfig config = {.mode = TIMER_MODE_ONESHOT,
+                          .periodUs = 1000,
+                          .callback = callback,
+                          .userData = &callbackCount,
+                          .priority = 0};
 
     TimerHandle handle;
     HAL_TIMER_Create(0, &config, &handle);
@@ -151,7 +150,8 @@ TEST_F(SimTimerTest, OneShotTimer) {
     HAL_TIMER_Destroy(handle);
 }
 
-TEST_F(SimTimerTest, MultipleTimers) {
+TEST_F(SimTimerTest, MultipleTimers)
+{
     int count1 = 0, count2 = 0, count3 = 0;
 
     auto callback = [](TimerHandle handle, void* userData) {
@@ -184,14 +184,13 @@ TEST_F(SimTimerTest, MultipleTimers) {
     HAL_TIMER_Destroy(handle3);
 }
 
-TEST_F(SimTimerTest, ResetTimer) {
-    TimerConfig config = {
-        .mode = TIMER_MODE_PERIODIC,
-        .periodUs = 10000,
-        .callback = nullptr,
-        .userData = nullptr,
-        .priority = 0
-    };
+TEST_F(SimTimerTest, ResetTimer)
+{
+    TimerConfig config = {.mode = TIMER_MODE_PERIODIC,
+                          .periodUs = 10000,
+                          .callback = nullptr,
+                          .userData = nullptr,
+                          .priority = 0};
 
     TimerHandle handle;
     HAL_TIMER_Create(0, &config, &handle);
@@ -211,7 +210,8 @@ TEST_F(SimTimerTest, ResetTimer) {
     HAL_TIMER_Destroy(handle);
 }
 
-TEST_F(SimTimerTest, SetPeriod) {
+TEST_F(SimTimerTest, SetPeriod)
+{
     int callbackCount = 0;
 
     auto callback = [](TimerHandle handle, void* userData) {
@@ -219,13 +219,11 @@ TEST_F(SimTimerTest, SetPeriod) {
         (*count)++;
     };
 
-    TimerConfig config = {
-        .mode = TIMER_MODE_PERIODIC,
-        .periodUs = 1000,
-        .callback = callback,
-        .userData = &callbackCount,
-        .priority = 0
-    };
+    TimerConfig config = {.mode = TIMER_MODE_PERIODIC,
+                          .periodUs = 1000,
+                          .callback = callback,
+                          .userData = &callbackCount,
+                          .priority = 0};
 
     TimerHandle handle;
     HAL_TIMER_Create(0, &config, &handle);
@@ -245,7 +243,8 @@ TEST_F(SimTimerTest, SetPeriod) {
     HAL_TIMER_Destroy(handle);
 }
 
-TEST_F(SimTimerTest, SystemTick) {
+TEST_F(SimTimerTest, SystemTick)
+{
     uint64_t tick1 = HAL_TIMER_GetSystemTickUs();
     EXPECT_EQ(0u, tick1);
 
@@ -258,7 +257,8 @@ TEST_F(SimTimerTest, SystemTick) {
     EXPECT_EQ(1000u, tickMs);
 }
 
-TEST_F(SimTimerTest, Delay) {
+TEST_F(SimTimerTest, Delay)
+{
     uint64_t start = HAL_TIMER_GetSystemTickUs();
 
     HAL_TIMER_DelayUs(1000);
@@ -270,7 +270,8 @@ TEST_F(SimTimerTest, Delay) {
     EXPECT_EQ(6000u, after2 - start);
 }
 
-TEST_F(SimTimerTest, GetStats) {
+TEST_F(SimTimerTest, GetStats)
+{
     uint32_t total, active, callbacks;
 
     TimerConfig config = {TIMER_MODE_PERIODIC, 1000, nullptr, nullptr, 0};
@@ -295,7 +296,8 @@ TEST_F(SimTimerTest, GetStats) {
     HAL_TIMER_Destroy(h3);
 }
 
-TEST_F(SimTimerTest, DestroyRunningTimer) {
+TEST_F(SimTimerTest, DestroyRunningTimer)
+{
     int callbackCount = 0;
 
     auto callback = [](TimerHandle handle, void* userData) {
@@ -303,13 +305,11 @@ TEST_F(SimTimerTest, DestroyRunningTimer) {
         (*count)++;
     };
 
-    TimerConfig config = {
-        .mode = TIMER_MODE_PERIODIC,
-        .periodUs = 1000,
-        .callback = callback,
-        .userData = &callbackCount,
-        .priority = 0
-    };
+    TimerConfig config = {.mode = TIMER_MODE_PERIODIC,
+                          .periodUs = 1000,
+                          .callback = callback,
+                          .userData = &callbackCount,
+                          .priority = 0};
 
     TimerHandle handle;
     HAL_TIMER_Create(0, &config, &handle);
@@ -326,7 +326,8 @@ TEST_F(SimTimerTest, DestroyRunningTimer) {
     EXPECT_EQ(3, callbackCount);
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

@@ -6,8 +6,8 @@
 #ifndef SIM_TIMER_H
 #define SIM_TIMER_H
 
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 /**
  * @brief Initialize timer simulator
@@ -55,7 +55,6 @@ uint32_t SIM_TIMER_GetActiveTimerCount(void);
  * @param totalCallbacks Output total callbacks fired
  * @return 0 on success, -1 on failure
  */
-int SIM_TIMER_GetStats(uint32_t* totalTimers, uint32_t* activeTimers,
-                       uint32_t* totalCallbacks);
+int SIM_TIMER_GetStats(uint32_t* totalTimers, uint32_t* activeTimers, uint32_t* totalCallbacks);
 
 #endif /* SIM_TIMER_H */

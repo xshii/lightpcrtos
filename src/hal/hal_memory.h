@@ -16,19 +16,19 @@ typedef void* MemoryBuffer;
 typedef const char* PoolName;
 
 /* Predefined pool names (extensible) */
-#define POOL_NAME_L1       "L1"
-#define POOL_NAME_L2       "L2"
-#define POOL_NAME_L3       "L3"
-#define POOL_NAME_SRAM     "SRAM"
-#define POOL_NAME_DDR      "DDR"
-#define POOL_NAME_TCM      "TCM"
+#define POOL_NAME_L1 "L1"
+#define POOL_NAME_L2 "L2"
+#define POOL_NAME_L3 "L3"
+#define POOL_NAME_SRAM "SRAM"
+#define POOL_NAME_DDR "DDR"
+#define POOL_NAME_TCM "TCM"
 
 /* Memory buffer attributes */
 typedef struct {
     PoolName poolName;
     size_t size;
-    void* virtAddr;      /* Virtual address */
-    void* physAddr;      /* Physical address (if applicable) */
+    void* virtAddr; /* Virtual address */
+    void* physAddr; /* Physical address (if applicable) */
     bool isCached;
 } MemoryBufferInfo;
 
@@ -51,8 +51,7 @@ int HAL_MEMORY_Deinit(void);
  * @param buffer Output buffer handle
  * @return HAL_OK on success, HAL_ERROR on failure
  */
-int HAL_MEMORY_AllocBuffer(PoolName poolName, size_t size,
-                           MemoryBuffer* buffer);
+int HAL_MEMORY_AllocBuffer(PoolName poolName, size_t size, MemoryBuffer* buffer);
 
 /**
  * @brief Free allocated buffer
@@ -122,7 +121,6 @@ int HAL_MEMORY_InvalidateAll(void);
  * @param size Size in bytes
  * @return HAL_OK on success, HAL_ERROR on failure
  */
-int HAL_MEMORY_CopyBuffer(MemoryBuffer dstBuffer, MemoryBuffer srcBuffer,
-                          size_t size);
+int HAL_MEMORY_CopyBuffer(MemoryBuffer dstBuffer, MemoryBuffer srcBuffer, size_t size);
 
 #endif /* HAL_MEMORY_H */

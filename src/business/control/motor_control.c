@@ -4,8 +4,10 @@
  */
 
 #include "motor_control.h"
-#include "hal_memory.h"
+
 #include <string.h>
+
+#include "hal_memory.h"
 
 /* Module state */
 static struct {
@@ -21,27 +23,28 @@ static struct {
 } g_motorControl = {0};
 
 /* Private functions */
-static int MotorControlAllocateBuffer(void) {
-    return HAL_MEMORY_AllocBuffer(POOL_NAME_L2, 4096,
-                                  &g_motorControl.controlBuffer);
+static int MotorControlAllocateBuffer(void)
+{
+    return HAL_MEMORY_AllocBuffer(POOL_NAME_L2, 4096, &g_motorControl.controlBuffer);
 }
 
-static void MotorControlFreeBuffer(void) {
+static void MotorControlFreeBuffer(void)
+{
     if (g_motorControl.controlBuffer) {
         HAL_MEMORY_FreeBuffer(g_motorControl.controlBuffer);
         g_motorControl.controlBuffer = NULL;
     }
 }
 
-static int MotorControlSetupDma(void) {
-    return HAL_DMA_RequestChannel(g_motorControl.dmaId,
-                                  DMA_DIR_MEM_TO_PERIPH,
-                                  2, /* priority */
+static int MotorControlSetupDma(void)
+{
+    return HAL_DMA_RequestChannel(g_motorControl.dmaId, DMA_DIR_MEM_TO_PERIPH, 2, /* priority */
                                   &g_motorControl.dmaChannel);
 }
 
 /* Public functions */
-int MOTOR_CONTROL_Init(DmaId dmaId) {
+int MOTOR_CONTROL_Init(DmaId dmaId)
+{
     if (g_motorControl.initialized) {
         return HAL_OK;
     }
@@ -71,7 +74,8 @@ int MOTOR_CONTROL_Init(DmaId dmaId) {
     return HAL_OK;
 }
 
-int MOTOR_CONTROL_Deinit(void) {
+int MOTOR_CONTROL_Deinit(void)
+{
     if (!g_motorControl.initialized) {
         return HAL_OK;
     }
@@ -90,7 +94,8 @@ int MOTOR_CONTROL_Deinit(void) {
     return HAL_OK;
 }
 
-int MOTOR_CONTROL_SetMode(MotorMode mode) {
+int MOTOR_CONTROL_SetMode(MotorMode mode)
+{
     if (!g_motorControl.initialized) {
         return HAL_ERROR;
     }
@@ -99,7 +104,8 @@ int MOTOR_CONTROL_SetMode(MotorMode mode) {
     return HAL_OK;
 }
 
-int MOTOR_CONTROL_SetSpeed(float speed) {
+int MOTOR_CONTROL_SetSpeed(float speed)
+{
     if (!g_motorControl.initialized) {
         return HAL_ERROR;
     }
@@ -111,7 +117,8 @@ int MOTOR_CONTROL_SetSpeed(float speed) {
     return HAL_OK;
 }
 
-int MOTOR_CONTROL_GetStatus(MotorStatus* status) {
+int MOTOR_CONTROL_GetStatus(MotorStatus* status)
+{
     if (!g_motorControl.initialized || !status) {
         return HAL_ERROR;
     }
@@ -124,7 +131,8 @@ int MOTOR_CONTROL_GetStatus(MotorStatus* status) {
     return HAL_OK;
 }
 
-int MOTOR_CONTROL_Start(void) {
+int MOTOR_CONTROL_Start(void)
+{
     if (!g_motorControl.initialized) {
         return HAL_ERROR;
     }
@@ -133,7 +141,8 @@ int MOTOR_CONTROL_Start(void) {
     return HAL_OK;
 }
 
-int MOTOR_CONTROL_Stop(void) {
+int MOTOR_CONTROL_Stop(void)
+{
     if (!g_motorControl.initialized) {
         return HAL_ERROR;
     }

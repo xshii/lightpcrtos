@@ -4,8 +4,10 @@
  */
 
 #include "sensor_manager.h"
-#include "hal_scheduler.h"
+
 #include <string.h>
+
+#include "hal_scheduler.h"
 
 /* Module state */
 static struct {
@@ -17,12 +19,14 @@ static struct {
 } g_sensorManager = {0};
 
 /* Private functions (模块内对内接口: 大驼峰) */
-static int SensorManagerAllocateDataBuffer(void) {
+static int SensorManagerAllocateDataBuffer(void)
+{
     return HAL_MEMORY_AllocBuffer(POOL_NAME_SRAM, sizeof(SensorData) * 100,
                                   &g_sensorManager.dataBuffer);
 }
 
-static void SensorManagerFreeDataBuffer(void) {
+static void SensorManagerFreeDataBuffer(void)
+{
     if (g_sensorManager.dataBuffer) {
         HAL_MEMORY_FreeBuffer(g_sensorManager.dataBuffer);
         g_sensorManager.dataBuffer = NULL;
@@ -30,7 +34,8 @@ static void SensorManagerFreeDataBuffer(void) {
 }
 
 /* Public functions (对外接口: 全大写+下划线) */
-int SENSOR_MANAGER_Init(void) {
+int SENSOR_MANAGER_Init(void)
+{
     if (g_sensorManager.initialized) {
         return HAL_OK;
     }
@@ -47,7 +52,8 @@ int SENSOR_MANAGER_Init(void) {
     return HAL_OK;
 }
 
-int SENSOR_MANAGER_Deinit(void) {
+int SENSOR_MANAGER_Deinit(void)
+{
     if (!g_sensorManager.initialized) {
         return HAL_OK;
     }
@@ -61,7 +67,8 @@ int SENSOR_MANAGER_Deinit(void) {
     return HAL_OK;
 }
 
-int SENSOR_MANAGER_Read(SensorData* data) {
+int SENSOR_MANAGER_Read(SensorData* data)
+{
     if (!g_sensorManager.initialized || !data) {
         return HAL_ERROR;
     }
@@ -78,7 +85,8 @@ int SENSOR_MANAGER_Read(SensorData* data) {
     return HAL_OK;
 }
 
-int SENSOR_MANAGER_StartSampling(uint32_t periodMs) {
+int SENSOR_MANAGER_StartSampling(uint32_t periodMs)
+{
     if (!g_sensorManager.initialized) {
         return HAL_ERROR;
     }
@@ -91,11 +99,13 @@ int SENSOR_MANAGER_StartSampling(uint32_t periodMs) {
     return HAL_OK;
 }
 
-int SENSOR_MANAGER_StopSampling(void) {
+int SENSOR_MANAGER_StopSampling(void)
+{
     g_sensorManager.sampling = false;
     return HAL_OK;
 }
 
-uint32_t SENSOR_MANAGER_GetSampleCount(void) {
+uint32_t SENSOR_MANAGER_GetSampleCount(void)
+{
     return g_sensorManager.sampleCount;
 }

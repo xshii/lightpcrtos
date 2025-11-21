@@ -10,40 +10,45 @@ extern "C" {
 #include "sim_memory.h"
 }
 
-class MotorControlTest : public ::testing::Test {
-protected:
-    void SetUp() override {
+class MotorControlTest : public ::testing::Test
+{
+   protected:
+    void SetUp() override
+    {
         SIM_MEMORY_SimulatorInit();
 
         // Configure memory pools
-        SIM_MEMORY_ConfigurePool(POOL_NAME_L2,
-                                 (void*)0x10000000,
-                                 512 * 1024); // 512KB L2
+        SIM_MEMORY_ConfigurePool(POOL_NAME_L2, (void*) 0x10000000,
+                                 512 * 1024);  // 512KB L2
     }
 
-    void TearDown() override {
+    void TearDown() override
+    {
         MOTOR_CONTROL_Deinit();
         SIM_MEMORY_SimulatorReset();
     }
 };
 
-TEST_F(MotorControlTest, InitializeWithDma) {
+TEST_F(MotorControlTest, InitializeWithDma)
+{
     DmaId dmaId = 0;
     int ret = MOTOR_CONTROL_Init(dmaId);
     EXPECT_EQ(HAL_OK, ret);
 }
 
-TEST_F(MotorControlTest, SetMode) {
+TEST_F(MotorControlTest, SetMode)
+{
     MOTOR_CONTROL_Init(0);
 
     int ret = MOTOR_CONTROL_SetMode(MOTOR_MODE_SPEED);
     EXPECT_EQ(HAL_OK, ret);
 }
 
-TEST_F(MotorControlTest, SetSpeed) {
+TEST_F(MotorControlTest, SetSpeed)
+{
     MOTOR_CONTROL_Init(0);
 
-    float targetSpeed = 1000.0f; // 1000 RPM
+    float targetSpeed = 1000.0f;  // 1000 RPM
     int ret = MOTOR_CONTROL_SetSpeed(targetSpeed);
     EXPECT_EQ(HAL_OK, ret);
 
@@ -52,7 +57,8 @@ TEST_F(MotorControlTest, SetSpeed) {
     EXPECT_FLOAT_EQ(targetSpeed, status.targetSpeed);
 }
 
-TEST_F(MotorControlTest, StartStop) {
+TEST_F(MotorControlTest, StartStop)
+{
     MOTOR_CONTROL_Init(0);
 
     int ret = MOTOR_CONTROL_Start();
@@ -69,17 +75,20 @@ TEST_F(MotorControlTest, StartStop) {
     EXPECT_FALSE(status.isRunning);
 }
 
-TEST_F(MotorControlTest, SetModeWithoutInit) {
+TEST_F(MotorControlTest, SetModeWithoutInit)
+{
     int ret = MOTOR_CONTROL_SetMode(MOTOR_MODE_SPEED);
     EXPECT_EQ(HAL_ERROR, ret);
 }
 
-TEST_F(MotorControlTest, SetSpeedWithoutInit) {
+TEST_F(MotorControlTest, SetSpeedWithoutInit)
+{
     int ret = MOTOR_CONTROL_SetSpeed(1000.0f);
     EXPECT_EQ(HAL_ERROR, ret);
 }
 
-TEST_F(MotorControlTest, MultipleSpeedChanges) {
+TEST_F(MotorControlTest, MultipleSpeedChanges)
+{
     MOTOR_CONTROL_Init(0);
 
     float speeds[] = {500.0f, 1000.0f, 1500.0f, 2000.0f};
@@ -92,7 +101,8 @@ TEST_F(MotorControlTest, MultipleSpeedChanges) {
     }
 }
 
-TEST_F(MotorControlTest, DifferentModes) {
+TEST_F(MotorControlTest, DifferentModes)
+{
     MOTOR_CONTROL_Init(0);
 
     EXPECT_EQ(HAL_OK, MOTOR_CONTROL_SetMode(MOTOR_MODE_SPEED));
@@ -100,7 +110,8 @@ TEST_F(MotorControlTest, DifferentModes) {
     EXPECT_EQ(HAL_OK, MOTOR_CONTROL_SetMode(MOTOR_MODE_TORQUE));
 }
 
-TEST_F(MotorControlTest, StartStopMultipleTimes) {
+TEST_F(MotorControlTest, StartStopMultipleTimes)
+{
     MOTOR_CONTROL_Init(0);
 
     for (int i = 0; i < 5; i++) {
@@ -109,7 +120,8 @@ TEST_F(MotorControlTest, StartStopMultipleTimes) {
     }
 }
 
-TEST_F(MotorControlTest, SpeedWhileRunning) {
+TEST_F(MotorControlTest, SpeedWhileRunning)
+{
     MOTOR_CONTROL_Init(0);
     MOTOR_CONTROL_Start();
 
@@ -124,7 +136,8 @@ TEST_F(MotorControlTest, SpeedWhileRunning) {
     MOTOR_CONTROL_Stop();
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

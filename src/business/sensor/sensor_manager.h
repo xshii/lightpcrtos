@@ -6,9 +6,9 @@
 #ifndef SENSOR_MANAGER_H
 #define SENSOR_MANAGER_H
 
-#include "hal_types.h"
-#include "hal_memory.h"
 #include "hal_dma.h"
+#include "hal_memory.h"
+#include "hal_types.h"
 
 /* Sensor data structure */
 typedef struct {

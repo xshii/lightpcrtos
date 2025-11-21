@@ -4,35 +4,40 @@
  */
 
 #include <gtest/gtest.h>
+
 #include <cstring>
 
 extern "C" {
 #include "hal_dma.h"
 }
 
-class SimDmaTest : public ::testing::Test {
-protected:
-    void SetUp() override {
+class SimDmaTest : public ::testing::Test
+{
+   protected:
+    void SetUp() override
+    {
         // DMA simulator is stateless, no special setup needed
     }
 
-    void TearDown() override {
-    }
+    void TearDown() override {}
 };
 
-TEST_F(SimDmaTest, InitializeDma) {
+TEST_F(SimDmaTest, InitializeDma)
+{
     DmaId dmaId = 0;
     int ret = HAL_DMA_Init(dmaId, nullptr);
     EXPECT_EQ(HAL_OK, ret);
 }
 
-TEST_F(SimDmaTest, InitializeMultipleDmas) {
+TEST_F(SimDmaTest, InitializeMultipleDmas)
+{
     EXPECT_EQ(HAL_OK, HAL_DMA_Init(0, nullptr));
     EXPECT_EQ(HAL_OK, HAL_DMA_Init(1, nullptr));
     EXPECT_EQ(HAL_OK, HAL_DMA_Init(2, nullptr));
 }
 
-TEST_F(SimDmaTest, RequestChannel) {
+TEST_F(SimDmaTest, RequestChannel)
+{
     DmaId dmaId = 0;
     HAL_DMA_Init(dmaId, nullptr);
 
@@ -43,7 +48,8 @@ TEST_F(SimDmaTest, RequestChannel) {
     EXPECT_NE(nullptr, channel);
 }
 
-TEST_F(SimDmaTest, RequestMultipleChannels) {
+TEST_F(SimDmaTest, RequestMultipleChannels)
+{
     DmaId dmaId = 0;
     HAL_DMA_Init(dmaId, nullptr);
 
@@ -62,7 +68,8 @@ TEST_F(SimDmaTest, RequestMultipleChannels) {
     }
 }
 
-TEST_F(SimDmaTest, ReleaseChannel) {
+TEST_F(SimDmaTest, ReleaseChannel)
+{
     DmaId dmaId = 0;
     HAL_DMA_Init(dmaId, nullptr);
 
@@ -73,7 +80,8 @@ TEST_F(SimDmaTest, ReleaseChannel) {
     EXPECT_EQ(HAL_OK, ret);
 }
 
-TEST_F(SimDmaTest, StartTransfer) {
+TEST_F(SimDmaTest, StartTransfer)
+{
     DmaId dmaId = 0;
     HAL_DMA_Init(dmaId, nullptr);
 
@@ -92,7 +100,8 @@ TEST_F(SimDmaTest, StartTransfer) {
     EXPECT_EQ(0, memcmp(src, dst, sizeof(src)));
 }
 
-TEST_F(SimDmaTest, TransferDifferentSizes) {
+TEST_F(SimDmaTest, TransferDifferentSizes)
+{
     DmaId dmaId = 0;
     HAL_DMA_Init(dmaId, nullptr);
 
@@ -117,7 +126,8 @@ TEST_F(SimDmaTest, TransferDifferentSizes) {
     }
 }
 
-TEST_F(SimDmaTest, IsBusy) {
+TEST_F(SimDmaTest, IsBusy)
+{
     DmaId dmaId = 0;
     HAL_DMA_Init(dmaId, nullptr);
 
@@ -131,7 +141,8 @@ TEST_F(SimDmaTest, IsBusy) {
     EXPECT_FALSE(isBusy);
 }
 
-TEST_F(SimDmaTest, GetProgress) {
+TEST_F(SimDmaTest, GetProgress)
+{
     DmaId dmaId = 0;
     HAL_DMA_Init(dmaId, nullptr);
 
@@ -150,7 +161,8 @@ TEST_F(SimDmaTest, GetProgress) {
     EXPECT_EQ(transferSize, bytesTransferred);
 }
 
-TEST_F(SimDmaTest, RegisterCallback) {
+TEST_F(SimDmaTest, RegisterCallback)
+{
     DmaId dmaId = 0;
     HAL_DMA_Init(dmaId, nullptr);
 
@@ -174,7 +186,8 @@ TEST_F(SimDmaTest, RegisterCallback) {
     EXPECT_TRUE(callbackCalled);
 }
 
-TEST_F(SimDmaTest, MultipleTransfersOnSameChannel) {
+TEST_F(SimDmaTest, MultipleTransfersOnSameChannel)
+{
     DmaId dmaId = 0;
     HAL_DMA_Init(dmaId, nullptr);
 
@@ -193,7 +206,8 @@ TEST_F(SimDmaTest, MultipleTransfersOnSameChannel) {
     }
 }
 
-TEST_F(SimDmaTest, DifferentDirections) {
+TEST_F(SimDmaTest, DifferentDirections)
+{
     DmaId dmaId = 0;
     HAL_DMA_Init(dmaId, nullptr);
 
@@ -207,7 +221,8 @@ TEST_F(SimDmaTest, DifferentDirections) {
     EXPECT_NE(channel2, channel3);
 }
 
-TEST_F(SimDmaTest, EnableEvents) {
+TEST_F(SimDmaTest, EnableEvents)
+{
     DmaId dmaId = 0;
     HAL_DMA_Init(dmaId, nullptr);
 
@@ -219,7 +234,8 @@ TEST_F(SimDmaTest, EnableEvents) {
     EXPECT_EQ(HAL_OK, ret);
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

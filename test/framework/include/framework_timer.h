@@ -6,8 +6,8 @@
 #ifndef FRAMEWORK_TIMER_H
 #define FRAMEWORK_TIMER_H
 
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 /* Timer callback function */
 typedef void (*FrameworkTimerCallback)(void* userData);
@@ -38,8 +38,8 @@ uint64_t FRAMEWORK_TIMER_GetTimeMs(void);
  * @param userData User data passed to callback
  * @return Timer ID on success, -1 on failure
  */
-int FRAMEWORK_TIMER_RegisterCallback(FrameworkTimerCallback callback,
-                                     uint32_t periodMs, void* userData);
+int FRAMEWORK_TIMER_RegisterCallback(FrameworkTimerCallback callback, uint32_t periodMs,
+                                     void* userData);
 
 /**
  * @brief Unregister timer callback

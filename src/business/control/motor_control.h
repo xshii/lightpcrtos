@@ -6,16 +6,12 @@
 #ifndef MOTOR_CONTROL_H
 #define MOTOR_CONTROL_H
 
-#include "hal_types.h"
 #include "hal_dma.h"
 #include "hal_scheduler.h"
+#include "hal_types.h"
 
 /* Motor control mode */
-typedef enum {
-    MOTOR_MODE_SPEED = 0,
-    MOTOR_MODE_POSITION = 1,
-    MOTOR_MODE_TORQUE = 2
-} MotorMode;
+typedef enum { MOTOR_MODE_SPEED = 0, MOTOR_MODE_POSITION = 1, MOTOR_MODE_TORQUE = 2 } MotorMode;
 
 /* Motor status */
 typedef struct {
