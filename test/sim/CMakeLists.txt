@@ -9,6 +9,7 @@ set(SIM_SOURCES
     src/sim_scheduler.c
     src/sim_dma.c
     src/sim_memory.c
+    src/sim_timer.c
 )
 
 # Create simulation library

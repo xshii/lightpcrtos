@@ -59,4 +59,23 @@ set_tests_properties(test_sim_scheduler PROPERTIES
     LABELS "sim;scheduler"
 )
 
+# Test timer simulator
+add_executable(test_sim_timer
+    test_sim_timer.cpp
+)
+
+target_link_libraries(test_sim_timer PRIVATE
+    GTest::gtest
+    GTest::gtest_main
+    sim_lib
+)
+
+target_compile_options(test_sim_timer PRIVATE -Wall -Wextra -g)
+
+add_test(NAME test_sim_timer COMMAND test_sim_timer)
+set_tests_properties(test_sim_timer PROPERTIES
+    TIMEOUT 30
+    LABELS "sim;timer"
+)
+
 message(STATUS "  Sim library tests configured")
