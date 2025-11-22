@@ -1,0 +1,121 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Sensor Tests",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build_test/test/testcases/sensor/test_sensor",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build_test",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "Build Tests (Debug)"
+        },
+        {
+            "name": "Debug Control Tests",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build_test/test/testcases/control/test_control",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build_test",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "Build Tests (Debug)"
+        },
+        {
+            "name": "Debug Sensor Tests (Filter)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build_test/test/testcases/sensor/test_sensor",
+            "args": ["--gtest_filter=*ReadSensorData"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build_test",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "Build Tests (Debug)"
+        },
+        {
+            "name": "Debug Current Test",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build_test/test/testcases/sensor/test_sensor",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build_test",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        },
+        {
+            "name": "Debug Sim Memory Tests",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build_test/test/sim/tests/test_sim_memory",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build_test",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "Build Tests (Debug)"
+        },
+        {
+            "name": "Debug Sim DMA Tests",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build_test/test/sim/tests/test_sim_dma",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build_test",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "Build Tests (Debug)"
+        },
+        {
+            "name": "Debug Sim Scheduler Tests",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build_test/test/sim/tests/test_sim_scheduler",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build_test",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "Build Tests (Debug)"
+        },
+        {
+            "name": "Debug Sim Timer Tests",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build_test/test/sim/tests/test_sim_timer",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build_test",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "Build Tests (Debug)"
+        },
+        {
+            "name": "Debug System Init Tests",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build_test/test/testcases/system/test_system",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build_test",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "Build Tests (Debug)"
+        }
+    ]
+}

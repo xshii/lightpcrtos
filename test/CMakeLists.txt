@@ -29,10 +29,12 @@ add_subdirectory(sim)
 add_library(business_for_test STATIC
     ../src/business/sensor/sensor_manager.c
     ../src/business/control/motor_control.c
+    ../src/business/system_init.c
 )
 
 target_include_directories(business_for_test PUBLIC
     ../src/hal
+    ../src/business
     ../src/business/sensor
     ../src/business/control
 )

@@ -40,3 +40,4 @@ endfunction()
 # Add test modules
 add_subdirectory(sensor)
 add_subdirectory(control)
+add_subdirectory(system)
