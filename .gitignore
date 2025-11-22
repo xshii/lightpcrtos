@@ -13,9 +13,11 @@ cmake-build-*/
 CMakeCache.txt
 CMakeFiles/
 cmake_install.cmake
-Makefile
+/build/Makefile
+/build_*/Makefile
 *.cmake
 !CMakeLists.txt
+!cmake/*.cmake
 
 # Compiled files
 *.o

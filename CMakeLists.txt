@@ -5,7 +5,8 @@ project(LightPCRTOS VERSION 1.0.0 LANGUAGES C CXX)
 # 构建选项
 # ====================================
 option(BUILD_TESTS "Build unit tests (PC target)" OFF)
-option(BUILD_EMBEDDED "Build embedded target (business library only)" ON)
+option(BUILD_EMBEDDED "Build embedded target (ARM cross-compile)" OFF)
+option(BUILD_LINUX_APP "Build Linux application (simulation)" ON)
 option(ENABLE_COVERAGE "Enable code coverage for tests" OFF)
 
 # ====================================
@@ -37,17 +38,28 @@ if(BUILD_TESTS)
 
     add_definitions(-DUNIT_TEST_BUILD)
     add_definitions(-DPC_PLATFORM)
+    add_definitions(-DHARDWARE_SIMULATION)
 
     # 包含测试构建
     enable_testing()
     add_subdirectory(test)
 
+elseif(BUILD_LINUX_APP)
+    message(STATUS "Target: Linux Application (Simulation)")
+
+    add_definitions(-DLINUX_PLATFORM)
+    add_definitions(-DHARDWARE_SIMULATION)
+
+    # 构建Linux模拟应用
+    add_subdirectory(src)
+
 elseif(BUILD_EMBEDDED)
-    message(STATUS "Target: Embedded (Static Library)")
+    message(STATUS "Target: Embedded ARM (Production)")
 
-    add_definitions(-DEMBEDDED_BUILD)
+    add_definitions(-DEMBEDDED_TARGET)
+    add_definitions(-DARM_CORTEX_M4)
 
-    # 只编译业务静态库
+    # 构建嵌入式目标
     add_subdirectory(src)
 endif()
 

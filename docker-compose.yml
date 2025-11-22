@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: lightpcrtos:latest
+    container_name: lightpcrtos-dev
+    volumes:
+      - .:/workspace
+      - build-cache:/workspace/build
+      - build-test-cache:/workspace/build_test
+    working_dir: /workspace
+    stdin_open: true
+    tty: true
+    environment:
+      - BUILD_TYPE=Debug
+    command: /bin/bash
+
+volumes:
+  build-cache:
+  build-test-cache:
